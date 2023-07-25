@@ -1,0 +1,4 @@
+DROP DATABASE IF EXISTS USAFinancial_db;
+CREATE DATABASE USAFinancial_db;
+
+USE USAFinancial_db;
