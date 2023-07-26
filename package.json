@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/MerelJac/employeeDatabase#readme",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "gitignore": "^0.7.0",
     "inquirer": "^8.2.4",
     "mysql2": "^3.5.2"
