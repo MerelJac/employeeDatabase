@@ -45,7 +45,7 @@ const updateEmployeeQuestions = [{
     type: 'list',
     name: 'updateEmployeeActions',
     message: 'How would you like to update the employee?',
-    choices: ['Edit Role', 'Main Menu']
+    choices: ['Edit Role', 'Delete Employee', 'Main Menu']
 }]
 // combination function
 function init() {
@@ -136,6 +136,9 @@ function viewAllRoles() {
                 case 'Add A Role':
                     addRole();
                     break;
+                case 'Delete Employee':
+                    deleteEmployee();
+                    break;
                 case 'Main Menu':
                     init();
                     break;
@@ -176,7 +179,6 @@ function addRole() {
         }
     });
 }
-
 
 // employees
 
@@ -222,9 +224,35 @@ function updateEmployeeRole() {
                     });
                 });
             })
+                break;
+            case 'Delete Employee':
+                deleteEmployee();
+                break;
+            case 'Main Menu':
+                init();
+                break;
         }
     })
 
 }
+
+function deleteEmployee() {
+    inquirer.prompt([{
+        type: 'input',
+        name: 'who',
+        message: 'Enter the employee ID you would like to delete: '
+}]).then((answers) => {
+    connection.query(`DELETE FROM employee WHERE id = '${answers.who}';`, (err, res) => {
+        if (err) {
+            console.log(err);
+            console.log(`Employee ID not found. Please try again.`);
+            // reprompt for new employee id
+            deleteEmployee();
+        } else {
+        console.log(`Employee removed`)
+        init();}
+    })
+})}
+
 // auto runs function on launch
 init();
