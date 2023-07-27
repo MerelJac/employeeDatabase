@@ -9,22 +9,27 @@ CREATE TABLE departments (
     name VARCHAR(30) NOT NULL
 );
 
-INSERT INTO departments (id, name) 
-VALUES 
-    ( 1, 'Legal'),
-    ( 2, 'Engineering'),
-    ( 3, 'Investments');
-
 -- roles 
 CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
+    salary DECIMAL,
+    department VARCHAR(30),
     dept_id INT,
     FOREIGN KEY (dept_id) REFERENCES departments(id)
 );
 
-INSERT INTO roles (id, name, dept_id) 
-VALUES 
-    (1, 'Cheif of Engineering', 2),
-    (2, 'Cheif of Legal', 1);
+-- employee
+CREATE TABLE employee (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(30),
+    last_name VARCHAR(30),
+    role_name VARCHAR(60),
+    role_id INT,
+    department VARCHAR(30),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES departments(id),
+    FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
 

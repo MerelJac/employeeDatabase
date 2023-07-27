@@ -32,8 +32,21 @@ const roleQuestions = [{
     name: 'postRoleActions',
     message: 'What would you like to do next?',
     choices: ['View All Roles', 'Add A Role', 'Main Menu']
-}]
+}];
 
+const employeeQuestions = [{
+    type: 'list',
+    name: 'postEmployeeActions',
+    message: 'What would you like to do next?',
+    choices: ['Edit Employee Status', 'Main Menu']
+}];
+
+const updateEmployeeQuestions = [{
+    type: 'list',
+    name: 'updateEmployeeActions',
+    message: 'How would you like to update the employee?',
+    choices: ['Edit Role', 'Main Menu']
+}]
 // combination function
 function init() {
     inquirer.prompt(questions)
@@ -46,16 +59,16 @@ function init() {
                 viewAllRoles();
                 break;
             case 'View all employees':
-                console.log('roles');
+                viewAllEmployees();
                 break;
             case 'Add a department':
                 addDepartment();
                 break;
             case 'Add a role':
-                console.log('roles');
+                addRole();
                 break;
             case 'Update an employee role':
-                console.log('roles');
+                updateEmployeeRole();
                 break;
             default:
                 console.log('Invalid choice');
@@ -141,10 +154,10 @@ function addRole() {
         type: 'list',
         name: 'deptID',
         message: 'What department does this role work in?',
-        choices: ['1', '2', '3']
+        choices: ['Cutomer Service', 'Financial', 'Legal']
     }])
     .then((answer) => {
-        connection.query(`INSERT INTO roles (name, dept_id) VALUES ('${answer.addNameOfRole}', '${answer.deptID}');`, (err, res) => {
+        connection.query(`INSERT INTO roles (name, department) VALUES ('${answer.addNameOfRole}', '${answer.deptID}');`, (err, res) => {
             if (err) throw err;
             console.table(res);
         })})
@@ -164,5 +177,54 @@ function addRole() {
     });
 }
 
+
+// employees
+
+function viewAllEmployees() {   
+    connection.query(`SELECT * FROM employee`, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        inquirer.prompt(employeeQuestions)
+        .then((answer) => {
+        switch (answer.postEmployeeActions) {
+            case 'Edit Employee Status':
+                updateEmployeeRole();
+                break;
+            case 'Main Menu':
+                init();
+                break;
+        }
+    })
+    });
+}
+
+function updateEmployeeRole() {
+    inquirer.prompt(updateEmployeeQuestions)
+    .then((answers) => {
+        switch (answers.updateEmployeeActions) {
+            case 'Edit Role':
+            inquirer.prompt([{
+                type: 'input',
+                name: 'who',
+                message: 'Enter the employee ID you would like to edit: '
+            }, {
+                type: 'input',
+                name: 'newRole',
+                message: 'What is their new role?'
+            }]).then((answer) => {
+                connection.query(
+                    `UPDATE employee SET role_name = '${answer.newRole}' WHERE id = '${answer.who}';`, (err, res) => {
+                    if (err) {throw err};
+                    connection.query(`SELECT * FROM employee WHERE id = '${answer.who}';`, (err, selectRes) => {
+                        if (err) throw err;
+                        console.table(selectRes);
+                        init();
+                    });
+                });
+            })
+        }
+    })
+
+}
 // auto runs function on launch
 init();
