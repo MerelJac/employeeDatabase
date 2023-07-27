@@ -5,7 +5,7 @@ The USAFinancial Database application is a Node.js command-line tool that allows
 ## Video Walkthrough
 [Watch](https://drive.google.com/file/d/1HUWlp1oZ8_tB9LzvT_StYr-_Le1ww3BC/view)
 
-[alt text](./images/pictureExplaination.png)
+![alt text](./images/pictureExplaination.png)
 
 ## Prerequisites
 
