@@ -157,12 +157,11 @@ function addRole() {
         type: 'list',
         name: 'deptID',
         message: 'What department does this role work in?',
-        choices: ['Cutomer Service', 'Financial', 'Legal']
+        choices: ['Human Resources', 'Financial', 'Legal']
     }])
     .then((answer) => {
         connection.query(`INSERT INTO roles (name, department) VALUES ('${answer.addNameOfRole}', '${answer.deptID}');`, (err, res) => {
             if (err) throw err;
-            console.table(res);
         })})
     .then(() => inquirer.prompt(roleQuestions))
     .then((answer) => {

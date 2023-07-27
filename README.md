@@ -2,6 +2,11 @@
 
 The USAFinancial Database application is a Node.js command-line tool that allows users to view and edit databases using MySQL2 and Inquirer. With this application, you can interact with the USAFinancial database, perform CRUD (Create, Read, Update, Delete) operations on various tables, and manage financial data efficiently.
 
+## Video Walkthrough
+[Watch](https://drive.google.com/file/d/1HUWlp1oZ8_tB9LzvT_StYr-_Le1ww3BC/view)
+
+[alt text](./images/pictureExplaination.png)
+
 ## Prerequisites
 
 Before using the USAFinancial Database application, ensure you have the following software installed on your system:
